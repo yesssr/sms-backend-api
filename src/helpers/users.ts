@@ -37,6 +37,7 @@ export const usersQuery = {
         "users.updated_at"
       )
       .joinRelated("sekolah")
+      .modify("mod_get_roles")
       .where("users.deleted", false)
       .andWhere("sekolah.deleted", false)
       .first();
