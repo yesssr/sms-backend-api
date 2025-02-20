@@ -1,48 +1,50 @@
 import { NextFunction, Request, Response } from "express";
-
-let listSiswa: any[] = [];
-for (let i = 0; i < 10; i++) {
-  const element = {
-    id: i + 1,
-    sekolah_id: "uncil_dua",
-    nis: `247006111${i + 1}`,
-    email: `murid${i + 1}@gmail.com`,
-    name: `murid${i + 1}`,
-    password: `maret_beres_tawa_april`,
-    foto: `fotomurid${i + 1}`,
-  };
-  listSiswa.push(element);
-}
+import { siswaQuery } from "../helpers/siswa";
+import { pagination, success } from "../utils/utils";
 
 const siswaControllers = {
-  getAllSiswa: (req: Request, res: Response, next: NextFunction) => {
+  getAllSiswa: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      let sendList = [];
-      for (let i = Number(req.query.start); i < Number(req.query.end); i++) {
-        sendList.push(listSiswa[i]);
-      }
-      let data = {
-        ...sendList,
-        total: listSiswa.length,
-      }
-      res.status(200).send({
-        success: true,
-        message: "get all siswa",
-        data,
-      });
+      const { sekolah_id } = req.app.locals.credentials;
+      const limit = Number(req.query.limit);
+      const offset = Number(req.query.offset);
+      const listSiswa = await siswaQuery.getAllSiswa(sekolah_id, limit, offset);
+      const totalSiswa = await siswaQuery.getTotalSiswa(sekolah_id);
+      const page = pagination(
+        totalSiswa[0].total!,
+        Number(req.query.page),
+        Number(req.query.length)
+      );
+      success(res, "get all siswa", 200, listSiswa, page);
     } catch (error) {
       next(error);
     }
   },
 
-  addSiswa: (req: Request, res: Response, next: NextFunction) => {
+  addSiswa: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      listSiswa.push(req.body);
-      res.status(200).send({
-        success: true,
-        message: "add siswa successfully",
-        data: listSiswa,
-      });
+      const siswa = await siswaQuery.addSiswa(req.body);
+      success(res, "successfully add siswa", 200, siswa);
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  updateSiswa: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const id = req.params.id;
+      const siswa = await siswaQuery.updateSiswa(id, req.body);
+      success(res, "successfully update siswa", 200, siswa);
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  deleteSiswa: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const id = req.params.id;
+      const siswa = await siswaQuery.deleteSiswa(id);
+      success(res, "successfully delete siswa", 200, siswa);
     } catch (error) {
       next(error);
     }
