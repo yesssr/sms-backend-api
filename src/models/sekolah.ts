@@ -4,26 +4,41 @@ import Yayasan from "./yayasan";
 class Sekolah extends Model {
   static tableName = "sekolah";
   static jsonSchema = {
-    type: 'object',
-    required: ['id', 'yayasan_id', 'name'],
+    type: "object",
+    required: ["id", "yayasan_id", "nama", "no_telepon", "email", "jenjang"],
     properties: {
-      id: { type: 'string' },
-      yayasan_id: { type: 'string' },
-      name: { type: 'string' },
-    }
+      id: { type: "string", maxLength: 30 },
+      yayasan_id: { type: "string", maxLength: 30 },
+      nama: { type: "string" },
+      no_telepon: {
+        type: "string",
+        maxLength: 15,
+        pattern: "^08[0-9]{8,13}$",
+      },
+      email: { type: "string", format: "email" },
+      website: { type: "string", format: "uri", nullable: true },
+      logo: { type: "string", nullable: true },
+      jenjang: {
+        type: "string",
+        enum: ["SD", "SMP", "SMA", "SMK"],
+      },
+      is_active: { type: "boolean", default: true },
+      is_negeri: { type: "boolean", default: false },
+      deleted: { type: "boolean", default: false },
+    },
   };
 
-  static relationMappings = () => ({
+  static relationMappings = {
     yayasan: {
       relation: Model.BelongsToOneRelation,
       modelClass: Yayasan,
 
       join: {
-        from: 'sekolah.yayasan_id',
-        to: 'yayasan.id',
+        from: `${this.tableName}.yayasan_id`,
+        to: "yayasan.id",
       },
     },
-  });
+  };
 }
 
 export default Sekolah;

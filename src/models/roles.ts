@@ -1,21 +1,20 @@
-import { Model } from "objection";
+import { JSONSchema, Model } from "objection";
 import Sekolah from "./sekolah";
 
-class Matapelajaran extends Model {
-  static tableName = "Matapelajaran";
-  static jsonSchema = {
+class Role extends Model {
+  static tableName: string = "roles";
+  static jsonSchema: JSONSchema = {
     type: "object",
     required: ["id", "sekolah_id", "nama"],
     properties: {
       id: { type: "string", maxLength: 30 },
       sekolah_id: { type: "string", maxLength: 30 },
-      nama: { type: "string", maxLength: 255 },
-      types: { type: "string", enum: ["utama", "mulok"], nullable: true },
-      deleted: { type: "boolean", default: false },
+      nama: { type: "string" },
       created_at: { type: "string", format: "date-time" },
-      updated_at: { type: "string", format: "date-time" }
-    }
+      updated_at: { type: "string", format: "date-time" },
+    },
   };
+
   static relationMappings = {
     sekolah: {
       relation: Model.BelongsToOneRelation,
@@ -28,4 +27,4 @@ class Matapelajaran extends Model {
   };
 }
 
-export default Matapelajaran;
+export default Role;

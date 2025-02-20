@@ -5,9 +5,9 @@ class Ekskul extends Model {
   static tableName = 'ekskul';
   static jsonSchema = {
     type: 'object',
-    required: ['name'],
+    required: ['nama'],
   };
-  static relationMappings = () => ({
+  static relationMappings = {
     sekolah: {
       relation: Model.BelongsToOneRelation,
       modelClass: Sekolah,
@@ -16,7 +16,7 @@ class Ekskul extends Model {
         to: 'sekolah.id',
       }
     }
-  })
+  };
 }
 
 export default Ekskul;

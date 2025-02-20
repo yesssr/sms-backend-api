@@ -5,10 +5,10 @@ class TahunAjaran extends Model {
   static tableName = 'tahun_ajaran';
   static jsonSchema = {
     type: 'object',
-    required: ['name'],
+    required: ['nama'],
   };
 
-  static relationMappings = () => ({
+  static relationMappings = {
     sekolah: {
       relation: Model.BelongsToOneRelation,
       modelClass: Sekolah,
@@ -17,5 +17,5 @@ class TahunAjaran extends Model {
         to: 'sekolah.id',
       }
     }
-  })
+  };
 }

@@ -4,25 +4,25 @@ import Sekolah from "./sekolah";
 class Tingkat extends Model {
   static tableName = "tingkat";
   static jsonSchema = {
-    type: 'object',
-    required: ['name'],
+    type: "object",
+    required: ["nama"],
     properties: {
-      id: { type: 'string' },
-      sekolah_id: { type: 'string' },
-      name: { type: 'string' }
-    }
+      id: { type: "string" },
+      sekolah_id: { type: "string" },
+      nama: { type: "string" },
+    },
   };
 
-  static relationMappings = () => ({
+  static relationMappings = {
     sekolah: {
       relation: Model.BelongsToOneRelation,
       modelClass: Sekolah,
       join: {
         from: `${this.tableName}.sekolah_id`,
-        to: 'sekolah.id',
-      }
-    }
-  })
+        to: "sekolah.id",
+      },
+    },
+  };
 }
 
 export default Tingkat;
