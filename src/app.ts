@@ -1,9 +1,14 @@
-import express, { NextFunction, Request, Response } from 'express';
-import router from './routes/v1';
+import express, { Request, Response } from "express";
+import cors from "cors";
+import router from "./routes/v1";
+import { Model } from "objection";
+import knex from "./config/conf";
 
 const app = express();
+Model.knex(knex);
+app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: false }));
 
 app.get("/", (req: Request, res: Response) => {
   res.status(200).send({

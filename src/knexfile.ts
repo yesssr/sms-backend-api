@@ -7,19 +7,20 @@ const config: { [key: string]: Knex.Config } = {
     client: 'pg',
     connection: {
       database: 'sms_v1',
-      user:     'root',
-      password: '',
+      user:     'me',
+      password: '12345',
     },
     pool: {
       min: 2,
       max: 10
     },
     migrations: {
-      directory: './migrations',
-      extension: 'ts'
+      directory: './db/migrations',
+      extension: 'ts',
     },
     seeds: {
-      directory: './seeds'
+      directory: './db/seeds',
+      extension: 'ts',
     }
   },
 
@@ -57,4 +58,4 @@ const config: { [key: string]: Knex.Config } = {
 
 };
 
-module.exports = config;
+export default config;
