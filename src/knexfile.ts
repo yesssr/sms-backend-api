@@ -1,14 +1,14 @@
 import type { Knex } from "knex";
+import dotenv from "dotenv";
 
+dotenv.config();
 // Update with your config settings.
 
 const config: { [key: string]: Knex.Config } = {
   development: {
     client: 'pg',
     connection: {
-      database: 'sms_v1',
-      user:     'me',
-      password: '12345',
+      connectionString: process.env.DATABASE_URL,
     },
     pool: {
       min: 2,
