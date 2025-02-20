@@ -6,8 +6,8 @@ export async function up(knex: Knex): Promise<void> {
     t.string("id", 30).primary();
     t.string("tingkat_id", 30);
     t.string("tahun_id", 30);
-    t.string("name");
-    t.boolean("id_deleted").defaultTo(false);
+    t.string("nama");
+    t.boolean("deleted").defaultTo(false);
     t.timestamps(true, true, false);
     
     t.foreign("tingkat_id").references("tingkat.id");

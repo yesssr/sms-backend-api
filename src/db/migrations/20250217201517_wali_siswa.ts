@@ -7,8 +7,8 @@ export async function up(knex: Knex): Promise<void> {
     t.string('wali_id');
     t.string('siswa_id');
     t.primary(['wali_id', 'siswa_id']);
-    t.foreign('wali_id').references('wali.id');
-    t.foreign('siswa_id').references('siswa.id');
+    t.foreign('wali_id').references('wali.id').onDelete("CASCADE");
+    t.foreign('siswa_id').references('siswa.id').onDelete("CASCADE");
   });
 }
 

@@ -9,7 +9,7 @@ export async function up(knex: Knex): Promise<void> {
     t.string("regency_id");
     t.string("district_id");
     t.string("village_id");
-    t.string("detail").nullable();
+    t.string("alamat").notNullable();
     t.timestamps(true, true, false);
     
     t.foreign("sekolah_id")

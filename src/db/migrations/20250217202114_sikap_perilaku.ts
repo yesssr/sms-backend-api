@@ -5,7 +5,7 @@ export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable("sikap_perilaku", t => {
     t.string("id", 30).primary();
     t.string("tahun_id", 30);
-    t.string("name").notNullable();
+    t.string("nama").notNullable();
     t.timestamps(true, true, false);
 
     t.foreign("tahun_id")

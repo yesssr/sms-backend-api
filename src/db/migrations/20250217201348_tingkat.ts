@@ -2,14 +2,12 @@ import type { Knex } from "knex";
 
 
 export async function up(knex: Knex): Promise<void> {
-  return knex.schema.createTable("guru", t => {
+  return knex.schema.createTable("tingkat", t => {
     t.string("id", 30).primary();
     t.string("sekolah_id", 30);
-    t.string("username").notNullable();
-    t.string("email").notNullable();
-    t.string("name").notNullable();
-    t.string("password").notNullable();
-    t.string("foto");
+    t.string("nama").notNullable();
+    t.string("level").nullable();
+    t.boolean("deleted").defaultTo(false);
     t.timestamps(true, true, false);
 
     t.foreign("sekolah_id")
@@ -22,6 +20,6 @@ export async function up(knex: Knex): Promise<void> {
 
 
 export async function down(knex: Knex): Promise<void> {
-  return knex.schema.dropTable("guru");
+  return knex.schema.dropTable("tingkat");
 }
 
