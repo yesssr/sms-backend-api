@@ -69,6 +69,7 @@ export function success(
     message: msg,
     statusCode: statusCode,
     data: data,
+    pagination,
     credentials: token,
   });
 }
