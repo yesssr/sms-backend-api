@@ -6,7 +6,9 @@ import knex from "./config/conf";
 
 const app = express();
 Model.knex(knex);
-app.use(cors());
+app.use(cors({
+  origin: "*",
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
