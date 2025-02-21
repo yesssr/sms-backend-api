@@ -4,12 +4,12 @@ export const siswaQuery = {
   getAllSiswa: async (sekolah_id: string, limit: number, offset: number) => {
     return Siswa.query()
       .select(
-        "id",
+        "siswa.id",
         "sekolah_id",
         "nik",
         "nisn",
         "nis",
-        "email",
+        "siswa.email",
         "nama_lengkap",
         "nama_panggilan",
         "gender",
@@ -29,14 +29,17 @@ export const siswaQuery = {
         "jumlah_saudara_tiri",
         "jumlah_saudara_angkat",
         "alamat_tinggal",
-        "no_telepon",
+        "siswa.no_telepon",
         "types",
         "pindahan",
         "siswa.is_active",
         "siswa.created_at",
         "siswa.updated_at"
       )
+      .joinRelated("sekolah")
       .where("sekolah_id", sekolah_id)
+      .andWhere("siswa.deleted", false)
+      .andWhere("sekolah.deleted", false)
       .limit(limit)
       .offset(offset);
   },
@@ -47,16 +50,21 @@ export const siswaQuery = {
       .returning("*");
   },
 
-  updateSiswa: (id: string, data: Siswa) => {
+  updateSiswa: (id: string, sekolah_id: string, data: Siswa) => {
     return Siswa.query()
       .where("id", id)
+      .andWhere("sekolah_id", sekolah_id)
       .andWhere("deleted", false)
-      .patch(data)
+      .patch({
+        ...data,
+        updated_at: new Date().toISOString(),
+      })
       .returning("*");
   },
 
-  deleteSiswa: (id: string) => {
+  deleteSiswa: (id: string, sekolah_id: string) => {
     return Siswa.query()
+      .where("sekolah_id", sekolah_id)
       .patchAndFetchById(id, {
         deleted: true,
         updated_at: new Date().toISOString(),
