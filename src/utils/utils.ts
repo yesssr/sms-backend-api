@@ -74,11 +74,12 @@ export function success(
 }
 
 export function pagination(total: number, page: number, length: number) {
+  const totalPage = Math.ceil(total / length);
   return {
     current_page: page,
-    next_page: page + 1,
+    next_page: page < totalPage ? page + 1 : page,
     previous_page: page - 1,
-    total_pages: Math.ceil(total / length),
+    total_pages: totalPage,
     per_page: length,
     total_entries: total,
   };
