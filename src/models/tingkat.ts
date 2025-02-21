@@ -2,6 +2,9 @@ import { Model } from "objection";
 import Sekolah from "./sekolah";
 
 class Tingkat extends Model {
+  total?: number;
+  deleted?: boolean;
+  updated_at?: string;
   static tableName = "tingkat";
   static jsonSchema = {
     type: "object",
