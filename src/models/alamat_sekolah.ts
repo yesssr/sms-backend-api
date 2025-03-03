@@ -1,4 +1,4 @@
-import { Model } from "objection";
+import { AjvValidator, Model, Validator } from "objection";
 import Sekolah from "./sekolah";
 
 class AlamatSekolah extends Model {
@@ -27,6 +27,15 @@ class AlamatSekolah extends Model {
       }
     }
   };
+
+  static createValidator(): Validator {
+    return new AjvValidator({
+      onCreateAjv() {},
+      options: {
+        allErrors: true,
+      }
+    });
+  }
 }
 
 export default AlamatSekolah;

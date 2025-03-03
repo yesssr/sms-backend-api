@@ -1,5 +1,5 @@
 import { ValidationError, UniqueViolationError, ForeignKeyViolationError } from 'objection';
-import { TokenExpiredError } from 'jsonwebtoken';
+import { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
 
 export class SendError extends Error {
@@ -18,45 +18,50 @@ export const errorHandler = (
 ): Response | void => {
   if (err) {
     if (err instanceof ValidationError) {
-      // Handle ValidationError from Objection
-      const msg = err.message.split(',')[0];
-      return res.status(err.statusCode).json({
+      return res.status(400).json({
         success: false,
-        statusCode: err.statusCode,
-        message: msg,
+        statusCode: 400,
+        errors: Object.entries(err.data).map(([field, detail]) => ({
+          field,
+          detail,
+        })),
       });
     }
 
     if (err instanceof UniqueViolationError) {
-      // Handle UniqueViolationError
       return res.status(400).json({
         success: false,
         statusCode: 400,
-        message: `${err.columns} already used`,
+        message: err,
       });
     }
 
     if (err instanceof ForeignKeyViolationError) {
-      // Handle ForeignKeyViolationError
       const msg = err.constraint.split('_');
       return res.status(400).json({
         success: false,
         statusCode: 400,
-        message: `${msg[1]} not available`,
+        message: err,
+      });
+    }
+
+    if (err instanceof JsonWebTokenError) {
+      return res.status(400).json({
+        success: false,
+        statusCode: 400,
+        message: err,
       });
     }
 
     if (err instanceof TokenExpiredError) {
-      // Handle TokenExpiredError from JWT
       return res.status(400).json({
         success: false,
         statusCode: 400,
-        message: err.message,
+        message: err,
       });
     }
 
     if (err instanceof SendError) {
-      // Handle custom SendError
       return res.status(err.statusCode).json({
         success: false,
         statusCode: err.statusCode,
@@ -64,12 +69,11 @@ export const errorHandler = (
       });
     }
 
-    // For unknown errors, send a generic response
     console.error(err);
     return res.status(500).json({
       success: false,
       statusCode: 500,
-      message: 'Internal server error',
+      errors: 'Internal server error',
     });
   }
 };

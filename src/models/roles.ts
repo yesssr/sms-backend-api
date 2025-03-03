@@ -1,4 +1,4 @@
-import { JSONSchema, Model } from "objection";
+import { AjvValidator, JSONSchema, Model, Validator } from "objection";
 import Sekolah from "./sekolah";
 
 class Role extends Model {
@@ -25,6 +25,15 @@ class Role extends Model {
       }
     }
   };
+
+  static createValidator(): Validator {
+    return new AjvValidator({
+      onCreateAjv() {},
+      options: {
+        allErrors: true,
+      }
+    });
+  }
 }
 
 export default Role;

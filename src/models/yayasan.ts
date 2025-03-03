@@ -1,4 +1,4 @@
-import { Model } from "objection";
+import { AjvValidator, Model, Validator } from "objection";
 
 class Yayasan extends Model {
   static tableName = "yayasan";
@@ -19,6 +19,15 @@ class Yayasan extends Model {
       updated_at: { type: "string", format: "date-time" },
     },
   };
+
+  static createValidator(): Validator {
+    return new AjvValidator({
+      onCreateAjv() {},
+      options: {
+        allErrors: true,
+      }
+    });
+  }
 }
 
 export default Yayasan;

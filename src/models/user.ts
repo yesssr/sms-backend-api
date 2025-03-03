@@ -1,4 +1,4 @@
-import { AnyQueryBuilder, Model, Modifiers, RelationMappings } from "objection";
+import { AjvValidator, AnyQueryBuilder, Model, Modifiers, RelationMappings, Validator } from "objection";
 import Sekolah from "./sekolah";
 import Role from "./roles";
 export class User extends Model {
@@ -71,4 +71,13 @@ export class User extends Model {
         });
     }
   };
+
+  static createValidator(): Validator {
+    return new AjvValidator({
+      onCreateAjv() {},
+      options: {
+        allErrors: true,
+      }
+    });
+  }
 }
