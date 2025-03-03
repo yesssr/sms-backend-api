@@ -3,7 +3,7 @@ import type { Knex } from "knex";
 
 export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable("tahun_ajaran", t => {
-    t.string("id", 30).primary();
+    t.string("id", 36).primary();
     t.string("sekolah_id", 30);
     t.string("nama");
     t.enum("types", ["pending", "aktif", "nonaktif"])

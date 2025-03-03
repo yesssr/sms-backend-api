@@ -3,7 +3,7 @@ import type { Knex } from "knex";
 
 export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable("sekolah", t => {
-    t.string("id", 30).primary();
+    t.string("id", 36).primary();
     t.string("yayasan_id", 30)
       .notNullable()
       .references("id")
