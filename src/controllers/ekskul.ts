@@ -32,7 +32,18 @@ const ekskulControllers = {
       req.body.id = uuidv4();
       req.body.sekolah_id = sekolah_id;
       const ekskul = await ekskulQuery.addEkskul(req.body);
-      success(res, "successfully add ekskul", 200, ekskul);
+      success(res, "successfully add ekskul", 201, ekskul);
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  getEkskulById: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const id = req.params.id;
+      const { sekolah_id } = req.app.locals.credentials;
+      const ekskul = await ekskulQuery.getEkskulById(sekolah_id, id);
+      success(res, "get by id ekskul", 200, ekskul);
     } catch (error) {
       next(error);
     }

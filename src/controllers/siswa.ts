@@ -28,7 +28,18 @@ const siswaControllers = {
       req.body.id = uuidv4();
       req.body.sekolah_id = sekolah_id;
       const siswa = await siswaQuery.addSiswa(req.body);
-      success(res, "successfully add siswa", 200, siswa);
+      success(res, "successfully add siswa", 201, siswa);
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  getSiswaById: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const id = req.params.id;
+      const { sekolah_id } = req.app.locals.credentials;
+      const siswa = await siswaQuery.getSiswaById(sekolah_id, id);
+      success(res, "get by id siswa", 200, siswa);
     } catch (error) {
       next(error);
     }

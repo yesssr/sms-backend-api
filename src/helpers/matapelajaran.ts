@@ -19,6 +19,24 @@ export const matapelajaranQuery = {
       .offset(offset);
   },
 
+  getMatapelajaranById: async (sekolah_id: string, id: string) => {
+    return Matapelajaran.query()
+      .select(
+        "matapelajaran.id",
+        "sekolah_id",
+        "matapelajaran.nama",
+        "types",
+        "matapelajaran.created_at",
+        "matapelajaran.updated_at"
+      )
+      .joinRelated("sekolah")
+      .where("sekolah_id", sekolah_id)
+      .andWhere("matapelajaran.deleted", false)
+      .andWhere("sekolah.deleted", false)
+      .andWhere("matapelajaran.id", id)
+      .first();
+  },
+
   addMatapelajaran: (data: Matapelajaran) => {
     return Matapelajaran.query()
       .insert(data)

@@ -44,6 +44,24 @@ const tahunAjaranControllers = {
     }
   },
 
+  getByIdTahunAjaran: async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const id = req.params.id;
+      const { sekolah_id } = req.app.locals.credentials;
+      const tahunAjaran = await tahunAjaranQuery.getTahunAjaranById(
+        sekolah_id,
+        id
+      );
+      success(res, "get by id tahun ajaran", 200, tahunAjaran);
+    } catch (error) {
+      next(error);
+    }
+  },
+
   updateTahunAjaran: async (
     req: Request,
     res: Response,

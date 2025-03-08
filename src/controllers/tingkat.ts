@@ -38,6 +38,20 @@ const tingkatControllers = {
     }
   },
 
+  getByIdTingkat: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const id = req.params.id;
+      const { sekolah_id } = req.app.locals.credentials;
+      const tingkat = await tingkatQuery.getTingkatById(
+        sekolah_id,
+        id,
+      );
+      success(res, "get by id tingkat", 200, tingkat);
+    } catch (error) {
+      next(error);
+    }
+  },
+
   updateTingkat: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const id = req.params.id;

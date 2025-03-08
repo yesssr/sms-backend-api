@@ -10,6 +10,7 @@ router.get(
   tahunAjaranControllers.getAllTahunAjaran
 );
 router.post("/", tahunAjaranControllers.addTahunAjaran);
+router.get("/:id", tahunAjaranControllers.getByIdTahunAjaran);
 router.put("/:id", tahunAjaranControllers.updateTahunAjaran);
 router.delete("/:id", tahunAjaranControllers.deleteTahunAjaran);
 

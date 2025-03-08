@@ -6,6 +6,7 @@ const router = Router();
 
 router.get("/", paginationQueryValidate, guruControllers.getAllGuru);
 router.post("/", guruControllers.addGuru);
+router.get("/:id", guruControllers.getGuruById);
 router.put("/:id", guruControllers.updateGuru);
 router.delete("/:id", guruControllers.deleteGuru);
 

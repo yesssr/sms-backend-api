@@ -34,6 +34,17 @@ const waliControllers = {
     }
   },
 
+  getByIdWali: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const id = req.params.id;
+      const { sekolah_id } = req.app.locals.credentials;
+      const wali = await waliQuery.getWaliById(sekolah_id, id);
+      success(res, "get by id wali", 200, wali);
+    } catch (error) {
+      next(error);
+    }
+  },
+
   updateWali: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const id = req.params.id;

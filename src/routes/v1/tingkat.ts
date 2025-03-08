@@ -6,6 +6,7 @@ const router = Router();
 
 router.get("/", paginationQueryValidate, tingkatControllers.getAllTingkat);
 router.post("/", tingkatControllers.addTingkat);
+router.get("/:id", tingkatControllers.getByIdTingkat);
 router.put("/:id", tingkatControllers.updateTingkat);
 router.delete("/:id", tingkatControllers.deleteTingkat);
 

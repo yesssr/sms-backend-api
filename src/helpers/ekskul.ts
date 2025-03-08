@@ -18,6 +18,23 @@ export const ekskulQuery = {
       .offset(offset);
   },
 
+  getEkskulById: async (sekolah_id: string, id: string) => {
+    return Ekskul.query()
+      .select(
+        "ekskul.id", 
+        "sekolah_id",
+        "ekskul.nama",  
+        "ekskul.created_at", 
+        "ekskul.updated_at"
+      )
+      .joinRelated("sekolah")
+      .where("sekolah_id", sekolah_id)
+      .andWhere("ekskul.deleted", false)
+      .andWhere("sekolah.deleted", false)
+      .andWhere("ekskul.id", id)
+      .first();
+  },
+
   addEkskul: (data: Ekskul) => {
     return Ekskul.query()
       .insert(data)

@@ -38,7 +38,25 @@ const matapelajaranControllers = {
       req.body.id = uuidv4();
       req.body.sekolah_id = sekolah_id;
       const matapelajaran = await matapelajaranQuery.addMatapelajaran(req.body);
-      success(res, "successfully add matapelajaran", 200, matapelajaran);
+      success(res, "successfully add matapelajaran", 201, matapelajaran);
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  getByIdMatapelajaran: async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const id = req.params.id;
+      const { sekolah_id } = req.app.locals.credentials;
+      const matapelajaran = await matapelajaranQuery.getMatapelajaranById(
+        sekolah_id,
+        id,
+      );
+      success(res, "get by id matapelajaran", 200, matapelajaran);
     } catch (error) {
       next(error);
     }

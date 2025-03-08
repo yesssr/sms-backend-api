@@ -6,6 +6,7 @@ const router = Router();
 
 router.get("/", paginationQueryValidate, ekskulControllers.getAllEkskul);
 router.post("/", ekskulControllers.addEkskul);
+router.get("/:id", ekskulControllers.getEkskulById);
 router.put("/:id", ekskulControllers.updateEkskul);
 router.delete("/:id", ekskulControllers.deleteEkskul);
 

@@ -19,6 +19,24 @@ export const tingkatQuery = {
       .offset(offset);
   },
 
+  getTingkatById: async (sekolah_id: string, id: string) => {
+    return Tingkat.query()
+      .select(
+        "tingkat.id",
+        "sekolah_id",
+        "tingkat.nama",
+        "level",
+        "tingkat.created_at",
+        "tingkat.updated_at"
+      )
+      .joinRelated("sekolah")
+      .where("sekolah_id", sekolah_id)
+      .andWhere("tingkat.deleted", false)
+      .andWhere("sekolah.deleted", false)
+      .andWhere("tingkat.id", id)
+      .first();
+  },
+
   addTingkat: (data: Tingkat) => {
     return Tingkat.query()
       .insert(data)

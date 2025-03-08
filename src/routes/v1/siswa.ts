@@ -6,6 +6,7 @@ const router = Router();
 
 router.get("/", paginationQueryValidate, siswaControllers.getAllSiswa);
 router.post("/", siswaControllers.addSiswa);
+router.get("/:id", siswaControllers.getSiswaById);
 router.put("/:id", siswaControllers.updateSiswa);
 router.delete("/:id", siswaControllers.deleteSiswa);
 

@@ -35,6 +35,40 @@ export const waliQuery = {
       .offset(offset);
   },
 
+  getWaliById: async (sekolah_id: string, id: string) => {
+    return Wali.query()
+      .select(
+        "wali.id",
+        "sekolah_id",
+        "nik",
+        "nama_lengkap",
+        "nama_panggilan",
+        "gender",
+        "tempat_lahir",
+        "tanggal_lahir",
+        "alamat_tinggal",
+        "wali.no_telepon",
+        "wali.email",
+        "pendidikan_terakhir",
+        "pekerjaan",
+        "hubungan",
+        "nama_ibu",
+        "pendidikan_terakhir_ibu",
+        "pekerjaan_ibu",
+        "nama_bapak",
+        "pendidikan_terakhir_bapak",
+        "pekerjaan_bapak",
+        "wali.created_at",
+        "wali.updated_at"    
+      )
+      .joinRelated("sekolah")
+      .where("sekolah_id", sekolah_id)
+      .andWhere("wali.deleted", false)
+      .andWhere("sekolah.deleted", false)
+      .andWhere("wali.id", id)
+      .first();
+  },
+
   addWali: (data: Wali) => {
     return Wali.query()
       .insert(data)

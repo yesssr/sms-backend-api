@@ -28,7 +28,18 @@ const guruControllers = {
       req.body.id = uuidv4();
       req.body.sekolah_id = sekolah_id;
       const guru = await guruQuery.addGuru(req.body);
-      success(res, "successfully add guru", 200, guru);
+      success(res, "successfully add guru", 201, guru);
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  getGuruById: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const id = req.params.id;
+      const { sekolah_id } = req.app.locals.credentials;
+      const guru = await guruQuery.getGuruById(sekolah_id, id);
+      success(res, "get by id guru", 200, guru);
     } catch (error) {
       next(error);
     }

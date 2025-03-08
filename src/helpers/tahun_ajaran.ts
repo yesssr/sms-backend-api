@@ -19,6 +19,25 @@ export const tahunAjaranQuery = {
       .limit(limit)
       .offset(offset);
   },
+  
+  getTahunAjaranById: async (sekolah_id: string, id: string) => {
+    return TahunAjaran.query()
+      .select(
+        "tahun_ajaran.id",
+        "sekolah_id",
+        "tahun_ajaran.nama",
+        "types",
+        "tahun_ajaran.is_active",
+        "tahun_ajaran.created_at",
+        "tahun_ajaran.updated_at"
+      )
+      .joinRelated("sekolah")
+      .where("sekolah_id", sekolah_id)
+      .andWhere("tahun_ajaran.deleted", false)
+      .andWhere("sekolah.deleted", false)
+      .andWhere("tahun_ajaran.id", id)
+      .first();
+  },
 
   addTahunAjaran: (data: TahunAjaran) => {
     return TahunAjaran.query()

@@ -10,6 +10,7 @@ router.get(
   matapelajaranControllers.getAllMatapelajaran
 );
 router.post("/", matapelajaranControllers.addMatapelajaran);
+router.get("/:id", matapelajaranControllers.getByIdMatapelajaran);
 router.put("/:id", matapelajaranControllers.updateMatapelajaran);
 router.delete("/:id", matapelajaranControllers.deleteMatapelajaran);
 
